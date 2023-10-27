@@ -1,0 +1,42 @@
+
+---
+       
+-   hosts: all
+    become: true
+
+    tasks:
+        -   name: Установка пакета Zabbix агента на Ubuntu
+            apt:
+                name=zabbix-agent
+                state=present
+            when:
+                    ansible_distribution == 'Ubuntu'
+
+        -    name: Установка пакета Zabbix агента на CentOS
+             yum:
+                name=zabbix-agent
+                state=present
+             when:
+                        ansible_distribution == 'CentOS' and ansible_distribution_major_version == '7'
+
+        -    name: Настройка файла конфигурации Zabbix агента
+             template:
+                      src: /etc/ansible/playbooks/template/zabbix_agent.conf.j2
+                      dest: /etc/zabbix/zabbix_agentd.conf
+                      mode: 0644
+            
+             notify:
+                     Restart Zabbix агента
+        -    name: Стартовать и включить службу Zabbix агента
+             service:
+                       name: zabbix-agent
+                       state: started
+                       enabled: true
+                     
+
+    handlers:
+        -     name: Restart Zabbix агента
+              service:
+                       name: zabbix-agent
+                       state: restarted
+

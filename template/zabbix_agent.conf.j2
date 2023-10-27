@@ -1,0 +1,14 @@
+Server=158.160.125.247
+Hostname=ansible
+ListenPort=10050
+LogFile=/var/log/zabbix/zabbix_agentd.log
+LogFileSize=30
+DebugLevel=3
+PidFile=/var/run/zabbix/zabbix_agentd.pid
+EnableRemoteCommands=0
+LogRemoteCommands=1
+
+# Дополнительные параметры
+Timeout=30
+Include=/etc/zabbix/zabbix_agentd.conf.d/*.conf
+
