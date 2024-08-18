@@ -1,0 +1,12 @@
+---
+- name: Create user on remote server
+  hosts: your_remote_server
+  become: yes  # Используется, если для создания пользователя нужны привилегии суперпользователя
+  tasks:
+    - name: Create a new user
+      user:
+        name: user
+        state: present
+        shell: /bin/bash
+        create_home: yes      # Создание домашнего каталога
+        password: "{{ 'password' | password_hash('5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8') }}" # Хэширование пароля
