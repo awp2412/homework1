@@ -1,4 +1,3 @@
----
 - name: Create user on remote server
   hosts: your_remote_server
   become: yes  # Используется, если для создания пользователя нужны привилегии суперпользователя
